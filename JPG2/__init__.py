@@ -1,9 +1,6 @@
 # coding=utf-8
 import math
-from enum import Enum
-# zigzag扫描方向
-Choice = Enum('Choice',('rightTowards', 'rightUp','down','leftDown'))
-# print (Choice.rightTowards)
+
 # 量化表
 sch_matrix = [[16, 11, 10, 16, 24, 40, 51, 61],
              [12, 12, 14, 19, 26, 58, 60, 55],
@@ -13,6 +10,16 @@ sch_matrix = [[16, 11, 10, 16, 24, 40, 51, 61],
              [24, 35, 55, 64, 81, 104, 113, 92],
              [49, 64, 78, 87, 103, 121, 120, 101],
              [72, 92, 95, 98, 112, 100, 103, 99]]
+# zigzag矩阵
+index_matrix = [[0, 1, 5, 6, 14, 15, 27, 28],
+                [2, 4, 7, 13, 16, 26, 29, 42],
+                [3, 6, 12, 17, 25, 30, 41, 43],
+                [9, 11, 18, 24, 31, 40, 44, 53],
+                [10, 19, 23, 32, 39, 45, 52, 54],
+                [20, 22, 33, 38, 46, 51, 55, 60],
+                [21, 34, 37, 47, 50, 56, 59, 61],
+                [35, 36, 48, 49, 57, 58, 62, 63]]
+
 N = 8  # 矩阵边长
 input_matrix = [[0 for i in range(N)] for i in range(N)]
 output_matrix = [[0 for i in range(N)] for i in range(N)]
@@ -44,76 +51,13 @@ def SCH(input_matrix):
     return output_matrix
 
 
-class switch(object):
-    def __init__(self, value):
-        self.value = value
-        self.fall = False
-
-    def __iter__(self):
-        """Return the match method once, then stop"""
-        yield self.match
-        raise StopIteration
-
-    def match(self, *args):
-        """Indicate whether or not to enter a case suite"""
-        if self.fall or not args:
-            return True
-        elif self.value in args:  # changed for v1.5, see below
-            self.fall = True
-            return True
-        else:
-            return False
-
-# Z型扫描
 def zigzagScan(input_matrix):
-    row = 0
-    col = 0
-    choice = Choice.rightTowards
-    while (row != N - 1 or col != N - 1) :
-        print (input_matrix[row][col])
-        for case in switch(choice):
-            if case('Choice.rightTowards'):
-                col+=1
-                if row == 0:
-                    choice = Choice.leftDown
-                else:
-                    choice = Choice.rightUp
-                break
-            if case('Choice.rightUp'):
-                row -= 1
-                col += 1
-                if row == 0 and col != N - 1:
-                    choice = Choice.rightTowards
-                elif col == N - 1:
-                    choice = Choice.down
-                else:
-                    choice = Choice.rightUp
-                break
-            if case('Choice.down'):
-                row += 1
-                if col == 0:
-                    choice = Choice.rightUp
-                else:
-                    choice = Choice.leftDown
-                break
-            if case('Choice.leftDown'):
-                row += 1
-                col -= 1
-                if col == 0 and row != N - 1:
-                    choice = Choice.down
-                elif row == N - 1:
-                    choice = Choice.rightTowards
-                else:
-                    choice = Choice.leftDown
-                break
-
-matrix = [[1, 5, 3, 9],
-          [3, 7, 5, 6],
-          [9, 4, 6, 4],
-          [7, 3, 1, 3]]
-
-zigzagScan(matrix)
-
+    B = [0] * 64
+    for i in range(N):
+        for j in range(N):
+            index = index_matrix[i][j]
+            B[index] = input_matrix[i][j]
+    return B
 
 
 
