@@ -46,17 +46,18 @@ class BmpDiv:
             return True
         return False
 
-    def __getBmpFile(self, filename):
+    def __getBmpFile(self, filename,show_flag):
         if not self.__isBmpFile(filename):
             return None
         img = cv2.imread(filename)
-        cv2.namedWindow("Image")
-        cv2.imshow("Image", img)
-        cv2.waitKey()
+        if show_flag:
+            cv2.namedWindow("Image")
+            cv2.imshow("Image", img)
+            cv2.waitKey()
         return img
 
-    def setBmpFile(self, filename):
-        img = self.__getBmpFile(filename)
+    def setBmpFile(self, filename,flag=False):
+        img = self.__getBmpFile(filename,flag)
         if isinstance(img, numpy.ndarray):
             self.filename = filename
             self.img = img
@@ -92,7 +93,7 @@ class BmpDiv:
 
 if __name__ == '__main__':
     a = BmpDiv()
-    if a.setBmpFile("showPhoto.bmp"):
+    if a.setBmpFile("test.bmp"):
         a.divBmp()
     """
     img1 = self.img[:, :, 1]

@@ -141,6 +141,7 @@ class GUI_W(_GUI):
 class GUI_WR(GUI_W):
 	def __init__(self):
 		GUI_W.__init__(self)
+		
 	def init(self):
 		GUI_W.init(self)
 		self._add_widget_R()
