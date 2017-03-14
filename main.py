@@ -28,7 +28,7 @@ class JPG(BmpDiv):
 		self.divBmp()
 		self.split_to_data_shape()
 		self.dct()
-
+		
 		self._encoder.encode(self.data, file_out)
 
 	def read(self, file_in):

@@ -3,6 +3,13 @@ class Jsteg():
     def __init__(self):
         pass
 
+    def get_scale(self, carrier):
+        count = 0
+        for i in carrier:
+            if i!=0 and abs(i) != 1:
+                count+=1
+        return count
+
     def uninject(self, carrier):
         info = ""
         byte = header = 0
@@ -48,12 +55,24 @@ class Jsteg():
         return carrier
 
 if __name__ == '__main__':
+    from JPG3.Decoder import *
+    from JPG3.Encoder import *
     jsteg = Jsteg()
-    lst = [1,23,43,2,1,4]+[9]*99
-    str = "to"
+    _d = Decoder()
+    _e = Encoder()
+
+    _file_str="F:/test.jpg"
+    _file=open(_file_str,'wb')
+    lst = [1,23,43,2,1,4]+[9]*999
+    str = "he!"
     in_lst = jsteg.inject(lst,str)
-    out_lst = jsteg.uninject(lst)
-    print(out_lst)
+    _e.encode(in_lst,_file)
+
+    _file=open(_file_str,'rb')
+    lst=_d.decode(_file)
+
+    str = jsteg.uninject(lst)
+    print(str)
     # print(in_lst)
 
 

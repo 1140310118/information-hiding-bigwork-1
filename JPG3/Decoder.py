@@ -1,7 +1,7 @@
 import struct
 from JPG3.Huffman import *
 from JPG3.CONSTANT import *
-
+from Steganography.Jsteg import *
 
 class Decoder:
     def __init__(self):
@@ -16,7 +16,7 @@ class Decoder:
 
         all_bytes = file_in.read()
 
-        bytes = struct.unpack('B'*len(all_bytes), all_bytes)
+        bytes = struct.unpack(str(len(all_bytes))+'B', all_bytes)
 
         res = []
         count = 0
@@ -43,5 +43,6 @@ class Decoder:
 
 if __name__ == '__main__':
     decoder = Decoder()
+    jsteg = Jsteg()
     file_in = open("F:\\hello.jpg",'rb')
-    print(decoder.decode(file_in))
+    print(jsteg.uninject(decoder.decode(file_in)))

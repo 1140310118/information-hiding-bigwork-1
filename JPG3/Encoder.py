@@ -1,6 +1,7 @@
 from JPG3.Huffman import *
 import struct
 from JPG3.CONSTANT import *
+from Steganography.Jsteg import *
 
 class Encoder:
 
@@ -66,4 +67,8 @@ class Encoder:
 if __name__ == "__main__":
     encoder = Encoder()
     file = "F:\\hello.jpg"
-    encoder.encode([-128,-127,0,1,0,1,1]+[0]*100,open(file,'wb'))
+    input = [-128,-127,0,1,0,1,1]+[9]*999
+    info = "hello world!!!"
+    jsteg = Jsteg()
+    input = jsteg.inject(input,info)
+    encoder.encode(input,open(file,'wb'))
