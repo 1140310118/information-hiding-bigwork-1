@@ -18,7 +18,7 @@ class Jsteg():
         i = 0
         while i < 16 and index < len(carrier):
             if carrier[index] != 0 and abs(carrier[index]) != 1:
-                header = (header<<1) | (carrier[index]%2)
+                header = (header<<1) | (carrier[index]&1)
                 i+=1
             index += 1
 
@@ -55,26 +55,32 @@ class Jsteg():
         return carrier
 
 if __name__ == '__main__':
-    from JPG3.Decoder import *
-    from JPG3.Encoder import *
+    from encoder.Decoder import *
+    from encoder.Encoder import *
     jsteg = Jsteg()
-    _d = Decoder()
-    _e = Encoder()
+    # _d = Decoder()
+    # _e = Encoder()
+    #
+    # _file_str="F:/test.jpg"
+    # _file=open(_file_str,'wb')
+    #
+    import random
 
-    _file_str="F:/test.jpg"
-    _file=open(_file_str,'wb')
-    lst = [1,23,43,2,1,4]+[9]*999
-    str = "he!"
+    lst=[random.randint(-128,127) for i in range(10000)]
+    random.shuffle(lst)
+    str = "hello world!"
     in_lst = jsteg.inject(lst,str)
-    _e.encode(in_lst,_file)
+    print(jsteg.uninject(in_lst))
 
-    _file=open(_file_str,'rb')
-    lst=_d.decode(_file)
-
-    str = jsteg.uninject(lst)
-    print(str)
-    # print(in_lst)
-
+    # _e.encode(in_lst,_file)
+    #
+    # _file=open(_file_str,'rb')
+    # lst=_d.decode(_file)
+    #
+    # str = jsteg.uninject(lst)
+    # print(str)
+    # # print(in_lst)
+    #
 
 
 

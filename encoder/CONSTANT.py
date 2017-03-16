@@ -1,0 +1,2 @@
+CHAR_SIZE = 256
+LEN = 8

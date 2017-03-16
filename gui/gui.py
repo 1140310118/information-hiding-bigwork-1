@@ -48,7 +48,11 @@ class _GUI:
 		messagebox.showinfo(title="开发者",message="ZZWL隐写小组:\n\n张义策 赵正宇 王增 刘名风")
 	def show_linkus(self):
 		messagebox.showinfo(title="联系我们",message="Email：zzh19971968@foxmail.com")
-	
+	def _show_message(self,title,message):
+		messagebox.showinfo(title=title,message=message)		
+	def _savefile(self):
+		return filedialog.asksaveasfilename()
+
 class GUI_W(_GUI):
 	def __init__(self):
 		_GUI.__init__(self)
@@ -62,10 +66,11 @@ class GUI_W(_GUI):
 		self._add_radio(root)
 		self._add_button(root)
 	def _add_label(self,root):
+		self.scale_label=StringVar()
 		Label(root,text="秘密信息的写入",bg="#FFF").place(x=250,y=20,anchor=CENTER)
 		Label(root,text="BMP图像",bg="#FFF").place(x=20,y=70)
 		Label(root,text="密写方式",bg="#FFF").place(x=20,y=100)
-		Label(root,text="可写入信息的容量：",bg="#FFF").place(x=20,y=130)
+		Label(root,text="可写入信息的容量：",bg="#FFF",textvariable=self.scale_label).place(x=20,y=130)
 		Label(root,text="待写入信息",bg="#FFF").place(x=20,y=170)
 	def _add_entry(self,root):
 		self.bmp_stringVar=StringVar()
@@ -97,6 +102,7 @@ class GUI_W(_GUI):
 					text=text,
 					variable=self.typeVar,
 					value=mode,
+					command=self._radio_command,
 					**config)
 		r.place(x=100,y=100)
 		r.select()
@@ -106,7 +112,10 @@ class GUI_W(_GUI):
 						text=text,
 						variable=self.typeVar,
 						value=mode,
+						command=self._radio_command,
 						**config).place(x=x,y=100)
+	def _radio_command(self):
+		pass
 			
 	def _add_button(self,root):
 		Button(root,
@@ -157,12 +166,14 @@ class GUI_WR(GUI_W):
 		Label(root,text="含密文件",bg="#FFF").place(x=20,y=70)
 		Label(root,text="密写方式",bg="#FFF").place(x=20,y=100)
 		Label(root,text="秘密信息",bg="#FFF").place(x=20,y=150)
-		self.infor_label=Label(root,
-							bg="#EEA",
-							relief="solid",
-							borderwidth=1,
-							width=45,
-							height=4).place(x=100,y=155)
+		self.infor_label=StringVar()
+		Label(root,
+			bg="#EEA",
+			relief="solid",
+			textvariable=self.infor_label,
+			borderwidth=1,
+			width=45,
+			height=4).place(x=100,y=155)
 	def _add_entry_R(self,root):
 		self.tmp_stringVar=StringVar()
 		config={'highlightbackground':"#666",
@@ -184,8 +195,9 @@ class GUI_WR(GUI_W):
 		text,mode=MODES[0]
 		r=Radiobutton(root,
 					text=text,
-					variable=self.typeVar,
+					variable=self.typeVar_R,
 					value=mode,
+					command=self._radio_command,
 					**config)
 		r.place(x=100,y=100)
 		r.select()
@@ -193,8 +205,9 @@ class GUI_WR(GUI_W):
 			x+=60
 			Radiobutton(root,
 						text=text,
-						variable=self.typeVar,
+						variable=self.typeVar_R,
 						value=mode,
+						command=self._radio_command,
 						**config).place(x=x,y=100)
 	def _add_button_R(self,root):
 		Button(root,
@@ -221,13 +234,15 @@ class GUI_WR(GUI_W):
 	def _get_bmp_path_W(self):
 		return self._get_bmp_path()
 	def _set_infor_R(self,text):
-		self.infor_label["text"]=text
+		self.infor_label.set(text)
 	def _get_infor_W(self):
-		return self._get_infor()
+		return self._get_infor()[:-1]
 	def _get_type_R(self):
 		return self.typeVar_R.get()
 	def _get_type_W(self):
 		return self._get_type()
+	def _set_scale_label(self,text):
+		self.scale_label.set(text)
 	#################################
 	# blank
 	def _M_write(self):
