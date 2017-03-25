@@ -55,8 +55,8 @@ class Jsteg():
         return carrier
 
 if __name__ == '__main__':
-    from encoder.Decoder import *
-    from encoder.Encoder import *
+    # from encoder.Decoder import *
+    # from encoder.Encoder import *
     jsteg = Jsteg()
     # _d = Decoder()
     # _e = Encoder()
