@@ -111,7 +111,7 @@ class GUI_W(_GUI):
 		self.infor_text.place(x=100,y=170)
 	def _add_radio(self,root):
 		self.typeVar = IntVar()
-		MODES=[("Jsteg",1),("F3",2),("LSB",3),("LSB+",4),("F5",5)]
+		MODES=[("Jsteg",1),("F3",2),("LSB",3),("LSB+",4),("LSB++",5),("F5",6)]
 		x=100
 		config={'bg':"#FFF",'relief':FLAT}
 		text,mode=MODES[0]
@@ -150,6 +150,14 @@ class GUI_W(_GUI):
 			height=1,
 			relief=GROOVE,
 			command=self.exit).place(x=380,y=235)
+		Button(root,
+			text="获取",
+			height=1,
+			relief=GROOVE,
+			command=self._M_get_scale).place(x=400,y=130)
+
+	def _M_get_scale(self):
+		print("get scale")
 		
 	def _M_select_bmp_file(self):
 		a=self._openfile()
@@ -207,7 +215,7 @@ class GUI_WR(GUI_W):
 
 	def _add_radio_R(self,root):
 		self.typeVar_R = IntVar()
-		MODES=[("Jsteg",1),("F3",2),("LSB",3),("LSB+",4),("F5",5)]
+		MODES=[("Jsteg",1),("F3",2),("LSB",3),("LSB+",4),("LSB++",5),("F5",6)]
 		x=100
 		config={'bg':"#FFF",'relief':FLAT}
 		text,mode=MODES[0]
@@ -273,6 +281,7 @@ class GUI_WR(GUI_W):
 class GUI_WRA(GUI_WR):
 	def __init__(self):
 		GUI_WR.__init__(self)
+		self.root.title("ZZWL图片隐写小工具-v1.0")
 	def init(self):
 		GUI_WR.init(self)
 		self._add_widget_A()
@@ -369,6 +378,8 @@ class GUI_WRA(GUI_WR):
 		return self.typeVar_A.get()
 	def _set_report_A(self,text):
 		self.report_label.set(text)
+	def _get_bmp_path_A(self):
+		return self.bmp_stringVar_A.get()
 	
 
 

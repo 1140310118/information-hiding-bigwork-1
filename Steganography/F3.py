@@ -85,7 +85,7 @@ class Stega:
 
         self.code_len = self.injectedInf[0]
         inf = self.injectedInf[1:]
-        print(inf)
+        # print(inf)
         for i in inf:
             if i == 0:
                 continue
